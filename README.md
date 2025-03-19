@@ -69,6 +69,14 @@ Günümüzde video içerikleri, küresel izleyici kitlesine ulaşmak için kriti
 🎙️ **Seslendirme:** ElevenLabs (**Metin → Türkçe Ses**)  
 ⚙️ **Entegrasyon:** Python, Flask, React.js  
 
+---
+
+## 📖 Ürün Kataloğu
+
+[AIDestekliDublajSistemiRehberi.pdf](https://github.com/user-attachments/files/19336379/AIDestekliDublajSistemiRehberi.pdf)
+
+
+
 ## 📺 Kullanım
 - 📹 *YouTube Kullanım Linki*:
 - 🔗 *GitHub Linki*:(https://github.com/sidikafirat/AI-Dublaj-Sistemi-Rehberi)
