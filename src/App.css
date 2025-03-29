@@ -1,0 +1,185 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+.demo-buton {
+  /* Temel Özellikler */
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  
+  /* Renkler */
+  background: linear-gradient(135deg, #1a3868 0%, #6366f1 100%);
+  color: white;
+  
+  /* Gölge Efekti */
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+  
+  /* Hover Efekti */
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+    background: linear-gradient(135deg, #0f1052 0%, #3b82f6 100%);
+  }
+  
+  /* Aktif Durum */
+  &:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 10px rgba(59, 130, 246, 0.6);
+  }
+  
+  /* Animasyon Efekti */
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 100%);
+    transform: translateX(-100%);
+    transition: transform 0.5s ease;
+  }
+  
+  &:hover::after {
+    transform: translateX(100%);
+  }
+}
+/* Hero Section */
+.hero-section {
+  min-height: 80vh;
+  margin-top: 28px;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: white;
+  border-radius: 0 0 20px 20px;
+  margin-bottom: 3rem;
+}
+
+/* App.css veya HomePage.css içine ekleyin */
+.hero-image {
+  overflow: hidden; /* Taşan kısımları gizle */
+  border-radius: 16px; /* Köşe yuvarlaklığı */
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.hero-image img {
+  height: auto;
+  display: block;
+  animation: slideRight 8s ease-in-out infinite;
+  transform: translateX(0); /* Başlangıç pozisyonu */
+}
+
+/* Sağa kayıp geri gelme animasyonu */
+@keyframes slideRight {
+  0%, 100% {
+    transform: translateX(10);
+  }
+  25% {
+    transform: translateX(20px); /* Sağa hareket */
+  }
+  50% {
+    transform: translateX(-10); /* Merkeze dönüş */
+  }
+  75% {
+    transform: translateX(-20px); /* Sola hareket (isteğe bağlı) */
+  }
+}
+
+/* Features */
+.feature-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Technology */
+.tech-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.tech-list li {
+  padding: 15px;
+  margin-bottom: 10px;
+  background: white;
+  border-radius: 8px;
+  font-size: 1.1rem;
+}
+
+/* Workflow */
+.workflow-step {
+  text-align: center;
+  padding: 30px;
+  margin-bottom: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.step-number {
+  width: 50px;
+  height: 50px;
+  background: #0109526b;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
