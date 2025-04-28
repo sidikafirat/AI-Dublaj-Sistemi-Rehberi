@@ -1,9 +1,9 @@
 #root {
-  max-width: 1280px;
+  max-width:100% ;
   margin: 0 auto;
-  padding: 2rem;
+  margin-top: 59px;
   text-align: center;
-  
+ 
 }
 
 .logo {
@@ -99,10 +99,11 @@
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
   color: white;
   border-radius: 0 0 20px 20px;
-  margin-bottom: 3rem;
+  margin-bottom: 53px;
 }
 
 /* App.css veya HomePage.css içine ekleyin */
+
 .hero-image {
   overflow: hidden; /* Taşan kısımları gizle */
   border-radius: 16px; /* Köşe yuvarlaklığı */
@@ -134,6 +135,7 @@
 }
 
 /* Features */
+
 .feature-card {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: none;
@@ -182,4 +184,103 @@
   margin: 0 auto 20px;
   font-size: 1.5rem;
   font-weight: bold;
+}
+.home {
+  background: radial-gradient(circle at center, #ccd6f6, #182235);
+  /* Alternatif olarak daha yumuşak bir geçiş için: */
+  /* background: linear-gradient(to right, #ccd6f6, #a8b8d8, #ccd6f6); */
+  min-height: 100vh; /* Tam ekran kaplaması için */
+  width: 100%;
+}
+
+/*Footer*/
+.footer-section {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: #ccd6f6;
+  padding: 3rem 0;
+  margin-top: 0px;
+  
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.footer-brand h3 {
+  color: #64ffda;
+  margin-bottom: 1rem;
+}
+
+.footer-links h4,
+.footer-contact h4 {
+  color: #64ffda;
+  margin-bottom: 1rem;
+}
+
+.footer-links ul,
+.footer-contact ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li,
+.footer-contact li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+  color: #ccd6f6;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: #64ffda;
+}
+
+.social-icons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.social-icons a {
+  color: #ccd6f6;
+  font-size: 1.5rem;
+  transition: color 0.3s;
+}
+
+.social-icons a:hover {
+  color: #64ffda;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(100, 255, 218, 0.1);
+}
+
+/* Şık Gradient Geçiş */
+.content-to-footer {
+  height: 120px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(15, 23, 42, 0.3) 20%,    /* Footer'ın başlangıç rengiyle uyumlu */
+    rgba(15, 23, 42, 0.7) 60%,    /* Orta ton */
+    #0f172a 100%                   /* Footer'ın koyu rengi */
+  );
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+/* Mobil Uyumluluk */
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+  }
 }

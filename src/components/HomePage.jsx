@@ -5,6 +5,7 @@ import aiImage from '../assets/images/ai (1).png'; // veya '@assets/images/ai (1
 
 const HomePage = () => {
   return (
+    <div className='home'>
     <Container className="home-page">
       {/* Hero Section */}
       <section id="home" className="hero-section py-5">
@@ -36,7 +37,7 @@ const HomePage = () => {
 
       {/* Features Section */}
       <section id="features" className="py-5">
-        <h2 className="text-center mb-5">
+        <h2 className="text-center mb-5"  style={{ paddingTop: "30px" }}>
           <FaCogs className="me-2" />
           Özelliklerimiz
         </h2>
@@ -75,8 +76,8 @@ const HomePage = () => {
       </section>
 
       {/* Technology Section */}
-      <section id="technology" className="py-5 bg-light">
-        <h2 className="text-center mb-5">
+      <section id="technology" className="py-5">
+        <h2 className="text-center mb-5"  style={{ paddingTop: "30px" }}>
           <FaCogs className="me-2" />
           Kullandığımız Teknolojiler
         </h2>
@@ -94,7 +95,7 @@ const HomePage = () => {
 
       {/* Workflow Section */}
       <section id="workflow" className="py-5">
-        <h2 className="text-center mb-5">
+        <h2 className="text-center mb-5"  style={{ paddingTop: "30px" }}>
           <FaProjectDiagram className="me-2" />
           İş Akışımız
         </h2>
@@ -132,7 +133,7 @@ const HomePage = () => {
 
       {/* About Section */}
       <section id="about" className="py-5 bg-light">
-        <h2 className="text-center mb-5">
+        <h2 className="text-center mb-5"  style={{ paddingTop: "30px" }}>
           <FaInfoCircle className="me-2" />
           Hakkımızda
         </h2>
@@ -147,6 +148,7 @@ const HomePage = () => {
         </Row>
       </section>
     </Container>
+    </div>
   );
 };
 

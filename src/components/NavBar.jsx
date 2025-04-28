@@ -73,10 +73,10 @@ export const NavBar = ({ onDemoClick }) => {
           </Nav>
           
           <div className="social-icons">
-            <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/sidikafirat/AI-Dublaj-Sistemi-Rehberi" target="_blank" rel="noopener noreferrer">
               <FaGithub />
             </a>
-            <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.linkedin.com/in/s%C4%B1d%C4%B1ka-firat-05ba42254/" target="_blank" rel="noopener noreferrer">
               <FaLinkedin />
             </a>
           </div>
