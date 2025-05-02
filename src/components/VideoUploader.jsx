@@ -1,17 +1,16 @@
 import { useState } from 'react';
-import { Container, Form, Button, Alert, Spinner, Tabs, Tab } from 'react-bootstrap';
+import { Container, Form, Button, Alert, Spinner, ListGroup } from 'react-bootstrap';
 
 const VideoUploader = () => {
-  // State'ler
-  const [activeTab, setActiveTab] = useState('upload');
   const [videoUrl, setVideoUrl] = useState('');
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [transcript, setTranscript] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const [sourceLanguage, setSourceLanguage] = useState('');
   const [targetLanguage, setTargetLanguage] = useState('tr');
   const [voiceTone, setVoiceTone] = useState('neutral');
   const [isProcessing, setIsProcessing] = useState(false);
-  const [error, setError] = useState('');
-  const [step, setStep] = useState(1); // 1: Upload, 2: Language, 3: Voice, 4: Processing
+  const [step, setStep] = useState(1); // 1: URL, 2: Dil, 3: Ses, 4: İşlem
 
   // Dil seçenekleri
   const languages = [
@@ -30,220 +29,232 @@ const VideoUploader = () => {
     { id: 'energetic', name: 'Enerjik' }
   ];
 
-  // URL doğrulama
-  const isValidUrl = (url) => {
+  const isValidYouTubeUrl = (url) => {
     try {
       new URL(url);
-      return true;
+      return /youtu\.?be/.test(url);
     } catch {
       return false;
     }
   };
 
-  // Dosya yükleme handler
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file && file.type.startsWith('video/')) {
-      setSelectedFile(file);
-      setError('');
-    } else {
-      setError('Lütfen geçerli bir video dosyası seçin.');
+  const getTranscript = async () => {
+    if (!isValidYouTubeUrl(videoUrl)) {
+      setError('Geçersiz YouTube URL! Örnek: https://www.youtube.com/watch?v=...');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+    setTranscript([]);
+
+    try {
+      const response = await fetch('http://localhost:3001/api/get-transcript', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ videoUrl })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || 'Transkript alınamadı');
+      }
+
+      setTranscript(data.transcript);
+      setStep(2); // Transkript alındığında 2. adıma geç
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Form submit handler
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    if (step === 1) {
-      if (activeTab === 'url' && !isValidUrl(videoUrl)) {
-        setError('Lütfen geçerli bir URL girin');
-        return;
-      }
-      if (activeTab === 'upload' && !selectedFile) {
-        setError('Lütfen bir video dosyası seçin');
-        return;
-      }
-      setStep(2);
-      setError('');
-    } else if (step === 2) {
-      if (!sourceLanguage) {
-        setError('Lütfen kaynak dili seçin');
-        return;
-      }
-      setStep(3);
-      setError('');
-    } else if (step === 3) {
+    if (step === 3) {
       startProcessing();
     }
   };
 
-  // İşlemi başlatma
   const startProcessing = () => {
     setIsProcessing(true);
     setStep(4);
-    setError('');
     
-    // Burada API çağrısı yapılacak
     // Simüle edilmiş işlem
     setTimeout(() => {
       setIsProcessing(false);
-      // Burada başarılı sonuç durumu yönetilecek
     }, 3000);
   };
 
-  // Önceki adıma dön
   const goBack = () => {
     setStep(step - 1);
     setError('');
   };
 
   return (
-    <Container className="my-5">
-      <h2 className="text-center mb-4">Video Dublaj Sistemi</h2>
+    <Container className="youtube-transcript-container">
+      <h2 className="youtube-transcript-title">YouTube Transkript Çekici</h2>
       
-      {error && <Alert variant="danger">{error}</Alert>}
-      
-      <Form onSubmit={handleSubmit}>
-        {/* Adım 1: Video Yükleme */}
-        {step === 1 && (
-          <div className="video-upload-step">
-            <Tabs
-              activeKey={activeTab}
-              onSelect={(k) => setActiveTab(k)}
-              className="mb-3"
+      {step === 1 && (
+        <>
+          <Form.Group className="mb-4">
+            <Form.Label>YouTube Video URL</Form.Label>
+            <Form.Control
+              type="text"
+              value={videoUrl}
+              onChange={(e) => setVideoUrl(e.target.value)}
+              placeholder="Örnek: https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+              disabled={loading}
+            />
+          </Form.Group>
+
+          <div className="d-flex gap-2 mb-4">
+            <Button 
+              variant="primary" 
+              onClick={getTranscript}
+              disabled={loading || !videoUrl}
             >
-              <Tab eventKey="upload" title="Dosya Yükle">
-                <Form.Group controlId="formFile" className="my-3">
-                  <Form.Label>Video Dosyası Seçin</Form.Label>
-                  <Form.Control 
-                    type="file" 
-                    accept="video/*" 
-                    onChange={handleFileChange}
-                  />
-                </Form.Group>
-              </Tab>
-              <Tab eventKey="url" title="URL ile Ekle">
-                <Form.Group controlId="formUrl" className="my-3">
-                  <Form.Label>Video URL'si</Form.Label>
-                  <Form.Control
-                    type="url"
-                    placeholder="https://example.com/video.mp4"
-                    value={videoUrl}
-                    onChange={(e) => setVideoUrl(e.target.value)}
-                  />
-                </Form.Group>
-              </Tab>
-            </Tabs>
-          </div>
-        )}
-        
-        {/* Adım 2: Dil Seçimi */}
-        {step === 2 && (
-          <div className="language-step">
-            <h4>Dil Seçenekleri</h4>
-            <Form.Group controlId="formSourceLanguage" className="my-3">
-              <Form.Label>Kaynak Dil</Form.Label>
-              <Form.Select 
-                value={sourceLanguage} 
-                onChange={(e) => setSourceLanguage(e.target.value)}
-              >
-                <option value="">Dil seçin</option>
-                {languages.map((lang) => (
-                  <option key={lang.code} value={lang.code}>{lang.name}</option>
-                ))}
-              </Form.Select>
-            </Form.Group>
+              {loading ? (
+                <>
+                  <Spinner animation="border" size="sm" className="me-2" />
+                  Yükleniyor...
+                </>
+              ) : 'Transkripti Getir'}
+            </Button>
             
-            <Form.Group controlId="formTargetLanguage" className="my-3">
-              <Form.Label>Hedef Dil</Form.Label>
-              <Form.Select 
-                value={targetLanguage} 
-                onChange={(e) => setTargetLanguage(e.target.value)}
-              >
-                {languages.map((lang) => (
-                  <option key={lang.code} value={lang.code}>{lang.name}</option>
-                ))}
-              </Form.Select>
-            </Form.Group>
+            <Button 
+              variant="secondary" 
+              onClick={() => {
+                setVideoUrl('');
+                setTranscript([]);
+                setError('');
+              }}
+              disabled={loading}
+            >
+              Temizle
+            </Button>
           </div>
-        )}
-        
-        {/* Adım 3: Ses Seçimi */}
-        {step === 3 && (
-          <div className="voice-step">
-            <h4>Ses Tonu Seçimi</h4>
-            <div className="voice-options">
-              {voiceTones.map((voice) => (
-                <div key={voice.id} className="voice-option">
-                  <input
-                    type="radio"
-                    id={voice.id}
-                    name="voiceTone"
-                    value={voice.id}
-                    checked={voiceTone === voice.id}
-                    onChange={() => setVoiceTone(voice.id)}
-                  />
-                  <label htmlFor={voice.id}>{voice.name}</label>
-                </div>
-              ))}
-            </div>
+        </>
+      )}
+
+{step === 2 && (
+  <Form onSubmit={handleSubmit}>
+    <div className="mb-4">
+      <h4 style={{ color: 'white' }}>Transkript Önizleme</h4>
+      {/* Transkript listesi kısmına dokunulmadı - orijinal haliyle bırakıldı */}
+      <ListGroup className="transcript-list">
+        {transcript.map((item, index) => (
+          <ListGroup.Item key={index}>
+            <span className="text-muted me-2">[{item.start}s]</span>
+            {item.text}
+          </ListGroup.Item>
+        ))}
+      </ListGroup>
+    </div>
+
+    <Form.Group className="mb-3">
+      <Form.Label style={{ color: 'white' }}>Kaynak Dil</Form.Label>
+      <Form.Select 
+        value={sourceLanguage} 
+        onChange={(e) => setSourceLanguage(e.target.value)}
+        required
+      >
+        <option value="">Dil seçin</option>
+        {languages.map((lang) => (
+          <option key={lang.code} value={lang.code}>
+            {lang.name}
+          </option>
+        ))}
+      </Form.Select>
+    </Form.Group>
+
+    <Form.Group className="mb-4">
+      <Form.Label style={{ color: 'white' }}>Hedef Dil</Form.Label>
+      <Form.Select 
+        value={targetLanguage} 
+        onChange={(e) => setTargetLanguage(e.target.value)}
+        required
+      >
+        {languages.map((lang) => (
+          <option key={lang.code} value={lang.code}>
+            {lang.name}
+          </option>
+        ))}
+      </Form.Select>
+    </Form.Group>
+
+    <div className="d-flex justify-content-between">
+      <Button variant="outline-secondary" onClick={goBack}>
+        Geri
+      </Button>
+      <Button variant="primary" onClick={() => setStep(3)}>
+        Devam
+      </Button>
+    </div>
+  </Form>
+)}
+
+      {step === 3 && (
+        <Form onSubmit={handleSubmit}>
+          <h4 className="mb-3" style={{ color: 'white' }}>Ses Tonu Seçimi</h4>
+          
+          <div className="mb-4">
+            {voiceTones.map((voice) => (
+              <Form.Check
+                key={voice.id}
+                type="radio"
+                id={voice.id}
+                label={voice.name}
+                name="voiceTone"
+                checked={voiceTone === voice.id}
+                onChange={() => setVoiceTone(voice.id)}
+                className="mb-2"
+                style={{ color: 'white' }}  // Bu satırı ekledik
+                labelStyle={{ color: 'white' }}  // Bootstrap 5 için bu şekilde
+              />
+            ))}
           </div>
-        )}
-        
-        {/* Adım 4: İşlem Devam Ediyor */}
-        {step === 4 && isProcessing && (
-          <div className="processing-step text-center">
-            <Spinner animation="border" role="status">
-              <span className="visually-hidden">İşlem sürüyor...</span>
-            </Spinner>
-            <p className="mt-3">Video işleniyor...</p>
-            <p>Bu işlem birkaç dakika sürebilir.</p>
+
+          <div className="d-flex justify-content-between">
+            <Button variant="outline-secondary" onClick={goBack}>
+              Geri
+            </Button>
+            <Button variant="success" type="submit">
+              Dublajı Başlat
+            </Button>
           </div>
-        )}
-        
-        {/* Adım 4: İşlem Tamamlandı */}
-        {step === 4 && !isProcessing && (
-          <div className="result-step">
-            <Alert variant="success">
-              Dublaj işlemi başarıyla tamamlandı!
-            </Alert>
-            <div className="d-flex justify-content-center gap-3">
-              <Button variant="primary">Videoyu İndir</Button>
-              <Button variant="outline-secondary">Paylaş</Button>
-              <Button variant="outline-primary" onClick={() => setStep(3)}>
-                Düzenle
-              </Button>
-            </div>
-          </div>
-        )}
-        
-        {/* Navigasyon Butonları */}
-        {step < 4 && !isProcessing && (
-          <div className="d-flex justify-content-between mt-4">
-            {step > 1 && (
-              <Button variant="outline-secondary" onClick={goBack}>
-                Geri
-              </Button>
-            )}
-            {step < 3 && (
-              <Button variant="primary" type="submit">
-                Devam
-              </Button>
-            )}
-            {step === 3 && (
-              <Button variant="success" type="submit">
-                Dublajı Başlat
-              </Button>
-            )}
-            {step === 1 && (
-              <div></div> // Boş div ile hizalamayı sağla
-            )}
-          </div>
-        )}
-      </Form>
+        </Form>
+      )}
+
+      {step === 4 && (
+        <div className="text-center">
+          {isProcessing ? (
+            <>
+              <Spinner animation="border" className="mb-3" style={{ color: 'white' }} />
+              <h5 style={{ color: 'white' }}>Video işleniyor...</h5>
+              <p style={{ color: 'white' }}>Bu işlem birkaç dakika sürebilir.</p>
+            </>
+          ) : (
+            <>
+              <Alert variant="success" className="mb-4" style={{ color: 'white' }}>
+                Dublaj işlemi başarıyla tamamlandı!
+              </Alert>
+              <div className="d-flex justify-content-center gap-3">
+                <Button variant="primary">Videoyu İndir</Button>
+                <Button variant="outline-secondary">Paylaş</Button>
+              </div>
+            </>
+          )}
+        </div>
+      )}
+
+      {error && (
+        <Alert variant="danger" className="mt-3">
+          {error}
+        </Alert>
+      )}
     </Container>
-    
   );
 };
 

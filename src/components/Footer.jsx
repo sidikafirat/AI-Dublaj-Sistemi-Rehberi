@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="footer-content">
           {/* Logo ve Açıklama */}
           <div className="footer-brand">
-            <h3>AI Dubbing Pro</h3>
+            <h3>Dub.ai Pro</h3>
             <p>Videolarınızı anında dublajlayın, dil engelini aşın.</p>
           </div>
 
@@ -26,7 +26,7 @@ const Footer = () => {
           <div className="footer-contact">
             <h4>İletişim</h4>
             <ul>
-              <li><FaEnvelope /> info@aidubbingpro.com</li>
+              <li><FaEnvelope /> info@dubaipro.com</li>
               <li className="social-icons">
                 <a href="https://github.com/sidikafirat/AI-Dublaj-Sistemi-Rehberi" target="_blank" rel="noopener noreferrer">
                   <FaGithub />
@@ -41,7 +41,7 @@ const Footer = () => {
 
         {/* Copyright */}
         <div className="footer-bottom">
-          <p>© {new Date().getFullYear()} AI Dubbing Pro. Tüm hakları saklıdır.</p>
+          <p>© {new Date().getFullYear()} AI Dub.ai Pro. Tüm hakları saklıdır.</p>
         </div>
       </div>
     </footer>

@@ -39,7 +39,7 @@ export const NavBar = ({ onDemoClick }) => {
           className="d-flex align-items-center"
         >
           <FaRobot className="navbar-icon" />
-          <span className="brand-name">AI Dubbing Pro</span>
+          <span className="brand-name">Dub.ai Pro</span>
         </Navbar.Brand>
         
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
