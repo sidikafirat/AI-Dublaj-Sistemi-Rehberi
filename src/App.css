@@ -352,7 +352,8 @@ body {
   border: none;
 }
 
-.transcript-btn {
+.btn-primary, 
+.btn-secondary {
   /* Temel Özellikler */
   padding: 12px 30px;
   font-size: 1.1rem;
@@ -400,15 +401,6 @@ body {
   &:hover::after {
     transform: translateX(100%);
   }
-}
-.transcript-btn-secondary {
-  background-color: #edf2f7;
-  color: #4a5568;
-}
-
-.transcript-btn-secondary:hover {
-  background-color: #e2e8f0;
-  transform: translateY(-2px);
 }
 
 /* Hata mesajı */

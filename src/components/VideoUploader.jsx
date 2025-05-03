@@ -104,7 +104,7 @@ const VideoUploader = () => {
               type="text"
               value={videoUrl}
               onChange={(e) => setVideoUrl(e.target.value)}
-              placeholder="Örnek: https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+              placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
               disabled={loading}
             />
           </Form.Group>
@@ -135,6 +135,28 @@ const VideoUploader = () => {
               Temizle
             </Button>
           </div>
+          {error && (
+        <Alert variant="danger" className="mt-3 transcript-error-alert">
+          <strong>Hata!</strong> {error}
+        </Alert>
+      )}
+  
+      {transcript.length > 0 && (
+        <div className="transcript-box">
+          <h4 className="transcript-header">
+            <i className="bi bi-text-paragraph"></i>
+            Transkript:
+          </h4>
+          <ListGroup className="transcript-list">
+            {transcript.map((item, index) => (
+              <ListGroup.Item key={index} className="transcript-list-item">
+                <span className="transcript-timestamp">[{item.start}s]</span>
+                <span className="transcript-text">{item.text}</span>
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+        </div>
+      )}
         </>
       )}
 
@@ -142,7 +164,6 @@ const VideoUploader = () => {
   <Form onSubmit={handleSubmit}>
     <div className="mb-4">
       <h4 style={{ color: 'white' }}>Transkript Önizleme</h4>
-      {/* Transkript listesi kısmına dokunulmadı - orijinal haliyle bırakıldı */}
       <ListGroup className="transcript-list">
         {transcript.map((item, index) => (
           <ListGroup.Item key={index}>

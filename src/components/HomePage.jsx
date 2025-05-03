@@ -13,7 +13,7 @@ const HomePage = () => {
           <Col md={6}>
             <h1 className="display-4 fw-bold mb-4">
               <FaRobot className="me-3" />
-              AI Dubbing Pro
+              Dub.ai Pro
             </h1>
             <p className="lead mb-4">
               Videolarınızı otomatik olarak farklı dillere dublajlayın. Yapay zeka destekli
