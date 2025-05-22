@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { FaRobot, FaGithub, FaLinkedin } from "react-icons/fa";
 
-export const NavBar = ({ onDemoClick, onNavigate }) => {
+export const NavBar = ({ onDemoClick, onNavigate, onAuthClick }) => {
   const [activeLink, setActiveLink] = useState("home");
   const [scrolled, setScrolled] = useState(false);
   // eslint-disable-next-line no-unused-vars
@@ -73,9 +73,20 @@ export const NavBar = ({ onDemoClick, onNavigate }) => {
               Hakkında
             </Nav.Link>
             <Nav.Link onClick={() => onNavigate("biz")}>Biz Kimiz?</Nav.Link>{" "}
+            <Nav.Link onClick={() => onAuthClick("authform")}>
+              Giriş / Kayıt Ol
+            </Nav.Link>{" "}
             {/* ← Yeni buton */}
           </Nav>
 
+          <button
+            className="demo-btn"
+            onClick={() => {
+              scrollTo("demo");
+              setExpanded(false); // Menüyü kapat
+            }}>
+            DEMO TRY
+          </button>
           <div className="social-icons">
             <a
               href="https://github.com/sidikafirat/AI-Dublaj-Sistemi-Rehberi"
@@ -90,15 +101,6 @@ export const NavBar = ({ onDemoClick, onNavigate }) => {
               <FaLinkedin />
             </a>
           </div>
-
-          <button
-            className="demo-btn"
-            onClick={() => {
-              scrollTo("demo");
-              setExpanded(false); // Menüyü kapat
-            }}>
-            DEMO TRY
-          </button>
         </Navbar.Collapse>
       </Container>
     </Navbar>
