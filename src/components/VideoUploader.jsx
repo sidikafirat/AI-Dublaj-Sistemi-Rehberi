@@ -11,6 +11,8 @@ const VideoUploader = () => {
   const [voiceTone, setVoiceTone] = useState('neutral');
   const [isProcessing, setIsProcessing] = useState(false);
   const [step, setStep] = useState(1); // 1: URL, 2: Dil, 3: Ses, 4: İşlem
+  const [selectedLanguage, setSelectedLanguage] = useState('en');
+  const [transcriptLanguage, setTranscriptLanguage] = useState('en');
 
   // Dil seçenekleri
   const languages = [
@@ -49,21 +51,30 @@ const VideoUploader = () => {
     setTranscript([]);
 
     try {
-      const response = await fetch('http://localhost:3001/api/get-transcript', {
+      console.log('API isteği gönderiliyor:', { videoUrl, transcriptLanguage });
+      
+      const response = await fetch('http://localhost:5000/api/get-transcript', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ videoUrl })
+        body: JSON.stringify({ videoUrl, transcriptLanguage })
       });
 
       const data = await response.json();
+      console.log('API yanıtı:', data);
 
       if (!response.ok || !data.success) {
         throw new Error(data.error || 'Transkript alınamadı');
       }
 
-      setTranscript(data.transcript);
-      setStep(2); // Transkript alındığında 2. adıma geç
+      if (data.transcript && data.transcript.length > 0) {
+        setTranscript(data.transcript);
+        console.log('Transkript başarıyla alındı:', data.transcript.length, 'satır');
+      } else {
+        throw new Error('Boş transkript yanıtı');
+      }
+      
     } catch (err) {
+      console.error('Hata:', err);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -109,6 +120,20 @@ const VideoUploader = () => {
             />
           </Form.Group>
 
+          <Form.Group className="mb-4">
+            <Form.Label>Transkript Dili</Form.Label>
+            <Form.Select
+              value={transcriptLanguage}
+              onChange={(e) => setTranscriptLanguage(e.target.value)}
+              disabled={loading}
+            >
+              <option value="en">İngilizce</option>
+              <option value="de">Almanca</option>
+              <option value="fr">Fransızca</option>
+              <option value="es">İspanyolca</option>
+            </Form.Select>
+          </Form.Group>
+
           <div className="d-flex gap-2 mb-4">
             <Button 
               variant="primary" 
@@ -145,12 +170,12 @@ const VideoUploader = () => {
         <div className="transcript-box">
           <h4 className="transcript-header">
             <i className="bi bi-text-paragraph"></i>
-            Transkript:
+            Türkçe Çeviri:
           </h4>
           <ListGroup className="transcript-list">
             {transcript.map((item, index) => (
               <ListGroup.Item key={index} className="transcript-list-item">
-                <span className="transcript-timestamp">[{item.start}s]</span>
+                <span className="transcript-timestamp">[{Math.floor(item.start)}s]</span>
                 <span className="transcript-text">{item.text}</span>
               </ListGroup.Item>
             ))}
@@ -181,7 +206,7 @@ const VideoUploader = () => {
         onChange={(e) => setSourceLanguage(e.target.value)}
         required
       >
-        <option value="">Dil seçin</option>
+        <option value="">Dil seçin</option>   
         {languages.map((lang) => (
           <option key={lang.code} value={lang.code}>
             {lang.name}
