@@ -74,6 +74,9 @@ Günümüzde video içerikleri, küresel izleyici kitlesine ulaşmak için kriti
 ## 📖 Ürün Kataloğu  
 [AIDestekliDublajSistemiRehberi.pdf](https://github.com/user-attachments/files/19336379/AIDestekliDublajSistemiRehberi.pdf)
 ## 📖 Ürün Broşürü
+
+[Uploading broşür.pdf…]()
+
 ---
 
 ## 📺 Kullanım  
