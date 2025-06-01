@@ -126,7 +126,7 @@ const Biz = () => {
             <motion.div
               key={member.id}
               whileHover={{ y: -5 }}
-              className="team-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col items-center p-6">
+              className="relative group w-64 h-64 rounded-full overflow-hidden mx-auto">
               <div className="relative group w-48 h-48 rounded-full overflow-hidden mb-4 border-4 border-white shadow-md">
                 <img
                   src={member.image}
@@ -162,20 +162,13 @@ const Biz = () => {
         </div>
       </section>
 
-      {/* Organizasyon Şeması */}
-      <section className="mb-20">
-        <h2 className="text-3xl font-semibold mb-10 text-center">
-          Takım Yapısı
-        </h2>
-      </section>
-
       {/* Misyon & Vizyon */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
-          className="bg-white p-6 rounded-lg shadow-lg">
+          className="relative group w-64 h-64 rounded-full overflow-hidden mx-auto">
           <h3 className="text-2xl font-semibold mb-4 text-blue-700">
             Misyonumuz
           </h3>
@@ -200,7 +193,7 @@ const Biz = () => {
           initial={{ opacity: 0, x: 20 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
-          className="bg-white p-6 rounded-lg shadow-lg">
+          className="relative group w-64 h-64 rounded-full overflow-hidden mx-auto">
           <h3 className="text-2xl font-semibold mb-4 text-blue-700">
             Vizyonumuz
           </h3>
