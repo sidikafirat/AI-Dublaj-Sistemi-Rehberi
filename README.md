@@ -104,7 +104,7 @@ YouTube gibi platformlardaki yabancı dildeki video içeriklerin, Türkçe konu�
 | **Umut Beler** | MySQL, ER Modelleme, İlişkisel Veri Yapısı, Normalizasyon | Veritabanı Tasarımı ve Yönetimi |
 | **Burak Erim** | React, React-Bootstrap, Kullanıcı Deneyimi Tasarımı | Transkript Alma Arayüzü (Frontend) |
 | **Anıl Sürmeli** | Node.js, Express.js, Axios, Cheerio, API Geliştirme | Transkript Alma API (Backend) |
-| **Abdulsamet Uçar** | React, TailwindCSS, Framer Motion, SPA Geliştirme | “Biz Kimiz” Sayfası (Frontend) |
+| **Abdulsamet Uçar** | React, TailwindCSS, Framer Motion, SPA Geliştirme | Biz Kimiz, Giriş-Kayıt ol Tasarımı (Frontend) |
 
 
 
