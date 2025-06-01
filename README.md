@@ -99,7 +99,7 @@ YouTube gibi platformlardaki yabancı dildeki video içeriklerin, Türkçe konu�
 
 | İsim | Yetkinlikler | Görevler |
 |------|--------------|----------|
-| **Sidika Fırat** | Ana Sayfa, Navbar ve Footer Tasarımı (Frontend) | Proje Yöneticisi, React, React-Bootstrap, CSS, Çeviri Doğruluk Kontrolleri, UX/UI Tasarımı |
+| **Sidika Fırat** | Proje Yöneticisi, React, React-Bootstrap, CSS, Çeviri Doğruluk Kontrolleri, UX/UI Tasarımı | Ana Sayfa, Navbar ve Footer Tasarımı (Frontend) |
 | **Levent Kutay Sezer** | AWS IAM, RDS, CodePipeline, Elastic Beanstalk, CloudWatch | 	AWS Altyapı ve CI/CD |
 | **Umut Beler** | MySQL, ER Modelleme, İlişkisel Veri Yapısı, Normalizasyon | Veritabanı Tasarımı ve Yönetimi |
 | **Burak Erim** | React, React-Bootstrap, Kullanıcı Deneyimi Tasarımı | Transkript Alma Arayüzü (Frontend) |
