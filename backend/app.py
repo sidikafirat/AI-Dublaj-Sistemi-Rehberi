@@ -4,12 +4,33 @@ from flask_cors import CORS
 import requests
 import os
 from dotenv import load_dotenv
+from sqlalchemy import create_engine, text
 
 # .env dosyasını yükle
 load_dotenv()
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
+
+
+DB_HOST = os.getenv('DB_HOST')
+DB_PORT = os.getenv('DB_PORT')
+DB_USER = os.getenv('DB_USER')
+DB_PASS = os.getenv('DB_PASS')
+DB_NAME = os.getenv('DB_NAME')
+
+# Veritabanı bağlantısını dene
+try:
+    db_url = f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    engine = create_engine(db_url)
+    # Bağlantıyı test et
+    with engine.connect() as conn:
+        conn.execute(text("SELECT 1"))
+    print("✅ Veritabanı bağlantısı başarılı")
+except Exception as db_error:
+    print(f"⚠️ Veritabanı bağlantı hatası: {str(db_error)}")
+    print("ℹ️ Çeviri işlemleri çalışacak, ancak veriler kaydedilmeyecek")
+    engine = None
 
 # Çevre değişkenlerinden API bilgilerini al
 DEEPL_API_KEY = os.getenv('DEEPL_API_KEY')
@@ -21,10 +42,7 @@ if not DEEPL_API_KEY:
     print("Lütfen backend/.env dosyasını oluşturun ve DEEPL_API_KEY=your_api_key_here ekleyin")
     exit(1)
 
-def translate_text_to_turkish(text, source_language):
-    """
-    DeepL API kullanarak metni seçilen dilden Türkçeye çevirir
-    """
+def translate_text_to_turkish(text, source_language, user_id, title):
     try:
         response = requests.post(
             DEEPL_API_URL,
@@ -38,25 +56,110 @@ def translate_text_to_turkish(text, source_language):
                 "source_lang": source_language.upper()
             }
         )
-        
+
         if response.status_code == 200:
             result = response.json()
-            return result["translations"][0]["text"]
+            translated_text_result = result["translations"][0]["text"]
+
+            # ✅ Veritabanına kaydetmeyi dene (opsiyonel)
+            try:
+                if engine is not None:
+                    with engine.connect() as conn:
+                        conn.execute(text("""
+                            INSERT INTO videos (user_id, title, language, translated_text)
+                            VALUES (:user_id, :title, :language, :translated_text)
+                        """), {
+                            "user_id": user_id,
+                            "title": title,
+                            "language": source_language,
+                            "translated_text": translated_text_result
+                        })
+                    print(f"✅ Veritabanına kaydedildi: {translated_text_result[:50]}...")
+                else:
+                    print("ℹ️ Veritabanı bağlantısı yok, kayıt atlanıyor")
+            except Exception as db_error:
+                print(f"⚠️ Veritabanı kayıt hatası (çeviri devam ediyor): {str(db_error)}")
+
+            return translated_text_result
+
         else:
             print(f"DeepL API Hatası: {response.status_code} - {response.text}")
-            return text  # Çeviri başarısızsa orijinal metni döndür
-            
+            return text
+
     except Exception as e:
-        print(f"Çeviri hatası: {e}")
-        return text  # Hata durumunda orijinal metni döndür
+        print(f"Çeviri Hatası: {str(e)}")
+        return text
 
 
+@app.route("/register", methods=["POST"])
+def register():
+    if engine is None:
+        return jsonify({"status": "error", "message": "Veritabanı bağlantısı yok"})
+    
+    data = request.json
+    email = data.get("email")
+    password = data.get("password")
+
+    with engine.connect() as conn:
+        conn.execute(text("""
+            INSERT INTO users (email, password_hash)
+            VALUES (:email, :password)
+        """), {"email": email, "password": password})
+
+    return jsonify({"status": "user_created"})
+
+@app.route("/login", methods=["POST"])
+def login():
+    if engine is None:
+        return jsonify({"status": "error", "message": "Veritabanı bağlantısı yok"})
+    
+    data = request.json
+    email = data.get("email")
+    password = data.get("password")
+
+    with engine.connect() as conn:
+        result = conn.execute(text("""
+            SELECT id FROM users WHERE email = :email AND password_hash = :password
+        """), {"email": email, "password": password}).fetchone()
+
+    if result:
+        return jsonify({"status": "success", "user_id": result[0]})
+    else:
+        return jsonify({"status": "fail", "message": "Invalid credentials"})
+
+@app.route("/videos", methods=["GET"])
+def get_all_videos():
+    if engine is None:
+        return jsonify({"error": "Veritabanı bağlantısı yok"})
+    
+    try:
+        with engine.connect() as conn:
+            result = conn.execute(text("SELECT * FROM videos"))
+            data = [dict(row) for row in result]
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+@app.route("/translate", methods=["POST"])
+def translate():
+    data = request.json
+    text = data.get("text")
+    source_language = data.get("source_language")
+    user_id = data.get("user_id")
+    title = data.get("title")
+
+    translated_text = translate_text_to_turkish(text, source_language, user_id, title)
+
+    return jsonify({"translated": translated_text})
+
+    
 @app.route('/api/get-transcript', methods=['POST'])
 def get_transcript_api():
     try:
         data = request.get_json()
         video_url = data.get('videoUrl', '')
         transcript_language = data.get('transcriptLanguage', 'en')
+        user_id = data.get('user_id', 1)  # Varsayılan user_id
         
         print(f"Video URL: {video_url}")
         print(f"Seçilen transkript dili: {transcript_language}")
@@ -94,11 +197,14 @@ def get_transcript_api():
 
         print(f"Transkript alındı, {len(transcript)} satır bulundu")
 
+        # Video başlığını video_id'den oluştur
+        video_title = f"YouTube Video {video_id}"
+
         # Her transkript satırını Türkçeye çevir
         translated_transcript = []
         for i, entry in enumerate(transcript):
             original_text = entry['text']
-            translated_text = translate_text_to_turkish(original_text, transcript_language)
+            translated_text = translate_text_to_turkish(original_text, transcript_language, user_id, video_title)
             
             translated_transcript.append({
                 'start': entry['start'],
