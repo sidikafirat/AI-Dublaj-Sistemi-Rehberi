@@ -1,0 +1,8 @@
+flask
+youtube-transcript-api
+flask-cors
+requests
+python-dotenv
+sqlalchemy
+pymysql
+
