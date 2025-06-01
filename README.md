@@ -82,10 +82,11 @@ Günümüzde video içerikleri, küresel izleyici kitlesine ulaşmak için kriti
 ## 📺 Kullanım  
 - 📹 *YouTube Kullanım Linki*:  
 - 🔗 *GitHub Linki*: [https://github.com/sidikafirat/AI-Dublaj-Sistemi-Rehberi](https://github.com/sidikafirat/AI-Dublaj-Sistemi-Rehberi)
-
+- *Kullanım Kılavuzu 2.0v* : [Kullanım-Kılavuzu2.0.pdf](https://github.com/user-attachments/files/20542353/Kullanim-Kilavuzu2.0.pdf)
 ---
 ## 📺 Gereksinim Dökümanı
 [Nihai Gereksinim Dokümanı.pdf](https://github.com/user-attachments/files/20542171/Nihai.Gereksinim.Dokumani.pdf)
+
 
 ## 🎯 Proje Amacı ve Hedefleri  
 
