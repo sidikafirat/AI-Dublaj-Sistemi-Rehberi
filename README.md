@@ -84,6 +84,8 @@ Günümüzde video içerikleri, küresel izleyici kitlesine ulaşmak için kriti
 - 🔗 *GitHub Linki*: [https://github.com/sidikafirat/AI-Dublaj-Sistemi-Rehberi](https://github.com/sidikafirat/AI-Dublaj-Sistemi-Rehberi)
 
 ---
+## 📺 Gereksinim Dökümanı
+[Nihai Gereksinim Dokümanı.pdf](https://github.com/user-attachments/files/20542171/Nihai.Gereksinim.Dokumani.pdf)
 
 ## 🎯 Proje Amacı ve Hedefleri  
 
