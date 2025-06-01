@@ -115,20 +115,26 @@ YouTube gibi platformlardaki yabancı dildeki video içeriklerin, Türkçe konu�
 
 ---
 
-## 🧰 Kullanılan Yazılım ve Donanım Teknolojileri  
+## 🚀 Kullanılan Yazılım ve Donanım Teknolojileri
 
-### 📦 Yazılım Teknolojileri  
-- **Python 3.10+**  
-- **Flask**  
-- **React.js**  
-- **OpenAI Whisper**  
-- **DeepL API**  
-- **ElevenLabs API**
+### 📦 Yazılım Teknolojileri
 
-### 💻 Donanım ve Servis Gereksinimleri  
-- GPU destekli sistem  
-- Cloud sunucu veya yerel deployment  
-- API erişim anahtarları (OpenAI, DeepL, ElevenLabs)
+- **Python 3.10+**: Projenin backend tarafında kullanılan güçlü ve esnek bir programlama dili. Modern dil özellikleri ve geniş kütüphane desteği ile tercih edilmiştir.  
+- **Flask**: Python tabanlı, hafif ve modüler bir web uygulama çatısı. RESTful API’lerin hızlı geliştirilmesi için kullanılmıştır.  
+- **React.js**: Kullanıcı dostu ve dinamik arayüzler oluşturmak için kullanılan popüler bir JavaScript kütüphanesi.  
+- **OpenAI Whisper**: Ses dosyalarının metne dönüştürülmesini sağlayan, güçlü bir açık kaynak konuşma tanıma modeli.  
+- **DeepL API**: Metin çevirileri için kullanılan yüksek kaliteli ve bağlamsal olarak doğru sonuçlar üreten bir çeviri API’si.  
+- **ElevenLabs API**: Doğal ve gerçekçi ses üretimi sağlayan gelişmiş bir AI ses sentezleme hizmeti.
+
+### 💻 Donanım ve Servis Gereksinimleri
+
+- **GPU Destekli Sistem**: Özellikle ses işleme ve yapay zeka modellerinin verimli çalışması için gereklidir. Whisper gibi modeller GPU ile çok daha hızlı sonuç verir.  
+- **Cloud Sunucu veya Yerel Deployment**: Proje hem yerel geliştirme ortamında hem de bulut tabanlı altyapılarda dağıtılabilir.  
+- **API Erişim Anahtarları**:  
+  - `OpenAI` – Whisper modeli için  
+  - `DeepL` – Çeviri işlemleri için  
+  - `ElevenLabs` – Ses üretimi ve dublaj için
+
 
 ---
 
