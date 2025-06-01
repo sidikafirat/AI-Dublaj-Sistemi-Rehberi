@@ -10,68 +10,92 @@ import { FaGithub, FaLinkedin, FaTwitter, FaGlobe } from "react-icons/fa";
 const teamMembers = [
   {
     id: 1,
-    name: "Ahmet Yılmaz",
-    role: "Takım Lideri",
-    image: "https://randomuser.me/api/portraits/men/32.jpg",
-    bio: "Proje yönetimi ve iş geliştirme uzmanı. 10+ yıllık deneyim.",
+    name: "Anıl Sürmeli",
+    role: "Backend Geliştirici",
+    image:
+      "https://media.licdn.com/dms/image/v2/D4D03AQE_AvF9GyTLbw/profile-displayphoto-shrink_400_400/B4DZYxcsk0HwAk-/0/1744586329954?e=1754524800&v=beta&t=9O6spaUXFjrVQ0dMn6XXZcKKwrXKgwzOFOVy2kjNJO8",
+    bio: "Node.js, Express.js, Axios, Cheerio, API Geliştirme",
     links: [
-      { icon: <FaLinkedin />, url: "https://linkedin.com" },
-      { icon: <FaGithub />, url: "https://github.com" },
+      {
+        icon: <FaLinkedin />,
+        url: "https://www.linkedin.com/in/anilsurmeli/",
+      },
+      { icon: <FaGithub />, url: "https://github.com/anilsrml" },
     ],
   },
   {
     id: 2,
-    name: "Mehmet Kaya",
-    role: "Yapay Zeka Uzmanı",
-    image: "https://randomuser.me/api/portraits/men/22.jpg",
-    bio: "Makine öğrenmesi ve derin öğrenme konusunda uzman.",
+    name: "Abdulsamet Uçar",
+    role: "Frontend Geliştirici",
+    image:
+      "https://media.licdn.com/dms/image/v2/D4D03AQEJ48rtXcGvBg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1711587805653?e=1754524800&v=beta&t=m891f1CBVyT-Jd0h03X2H-DDBpKwAkW9wfI9yXqdDL4",
+    bio: "React, TailwindCSS, Framer Motion, SPA Geliştirme",
     links: [
-      { icon: <FaLinkedin />, url: "https://linkedin.com" },
-      { icon: <FaTwitter />, url: "https://twitter.com" },
+      {
+        icon: <FaLinkedin />,
+        url: "https://www.linkedin.com/in/abdulsamet-u%C3%A7ar-8312ba249/",
+      },
+      { icon: <FaGithub />, url: "https://github.com/Abdulsametucar" },
     ],
   },
   {
     id: 3,
-    name: "Ayşe Demir",
+    name: "Sıdıka Firat",
     role: "Frontend Geliştirici",
-    image: "https://randomuser.me/api/portraits/women/44.jpg",
-    bio: "React ve modern web teknolojileri konusunda uzman.",
+    image:
+      "https://media.licdn.com/dms/image/v2/D4D03AQGgq9niErNwDw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1725133826090?e=1754524800&v=beta&t=BcA3hN26jkrsp23-wjcOOYA9snzjoLQyALjf6_fFnJI",
+    bio: "Proje Yöneticisi, React, React-Bootstrap, CSS, Çeviri Doğruluk Kontrolleri, UX/UI Tasarımı",
     links: [
-      { icon: <FaGithub />, url: "https://github.com" },
-      { icon: <FaGlobe />, url: "https://personalwebsite.com" },
+      {
+        icon: <FaLinkedin />,
+        url: "https://www.linkedin.com/in/s%C4%B1d%C4%B1ka-firat-05ba42254/",
+      },
+      { icon: <FaGithub />, url: "https://github.com/sidikafirat" },
     ],
   },
   {
     id: 4,
-    name: "Fatma Şahin",
-    role: "Backend Geliştirici",
-    image: "https://randomuser.me/api/portraits/women/33.jpg",
-    bio: "Node.js ve veritabanı sistemleri konusunda uzman.",
+    name: "Umut Beler",
+    role: "Veritabanı Tasarımı ve Yönetimi",
+    image:
+      "https://media.licdn.com/dms/image/v2/D4D03AQFDgJfRCjy7oQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1729453171294?e=1754524800&v=beta&t=dJb6zAazHXewpCDjBSoPpiqP9oEMRop1lEHBHj4I_Qc",
+    bio: "MySQL, ER Modelleme, İlişkisel Veri Yapısı, Normalizasyon",
     links: [
-      { icon: <FaLinkedin />, url: "https://linkedin.com" },
-      { icon: <FaGithub />, url: "https://github.com" },
+      {
+        icon: <FaLinkedin />,
+        url: "https://www.linkedin.com/in/umut-b-b9b691251/",
+      },
+      { icon: <FaGithub />, url: "https://github.com/belerumut" },
     ],
   },
   {
     id: 5,
-    name: "Can Aydın",
-    role: "Test Mühendisi",
-    image: "https://randomuser.me/api/portraits/men/55.jpg",
-    bio: "Kalite güvence ve otomasyon testleri konusunda uzman.",
+    name: "Levent Kutay",
+    role: "AWS Altyapı ve CI/CD Uzmanı",
+    image:
+      "https://media.licdn.com/dms/image/v2/D4D03AQEyF7PxI4sSSQ/profile-displayphoto-shrink_400_400/B4DZUta7ksHwAg-/0/1740223790425?e=1754524800&v=beta&t=PKgpnwOFKGcY96sr4cWMEYhsAxSxB9oeHb5msfwCRXk",
+    bio: "AWS IAM, RDS, CodePipeline, Elastic Beanstalk, CloudWatch",
     links: [
-      { icon: <FaLinkedin />, url: "https://linkedin.com" },
-      { icon: <FaTwitter />, url: "https://twitter.com" },
+      {
+        icon: <FaLinkedin />,
+        url: "https://www.linkedin.com/in/levent-kutay-sezer-4b9685253/",
+      },
+      { icon: <FaGithub />, url: "https://github.com" },
     ],
   },
   {
     id: 6,
-    name: "Zeynep Koç",
-    role: "UI/UX Tasarımcı",
-    image: "https://randomuser.me/api/portraits/women/66.jpg",
-    bio: "Kullanıcı deneyimi ve arayüz tasarımı konusunda uzman.",
+    name: "Burak Erim",
+    role: "Frontend Geliştirici",
+    image:
+      "https://media.licdn.com/dms/image/v2/D4D03AQHQthVedVGIsg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1731948085733?e=1754524800&v=beta&t=S0YElHvNFgMVAgJMfhTom786ipaADR8klinTmZrjapU",
+    bio: "React, React-Bootstrap, Kullanıcı Deneyimi Tasarımı",
     links: [
-      { icon: <FaGlobe />, url: "https://personalwebsite.com" },
-      { icon: <FaLinkedin />, url: "https://linkedin.com" },
+      {
+        icon: <FaLinkedin />,
+        url: "https://www.linkedin.com/in/burak-erim/",
+      },
+      { icon: <FaGithub />, url: "https://github.com" },
     ],
   },
 ];
@@ -102,22 +126,22 @@ const Biz = () => {
             <motion.div
               key={member.id}
               whileHover={{ y: -5 }}
-              className="team-card bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="relative group">
+              className="relative group w-64 h-64 rounded-full overflow-hidden mx-auto">
+              <div className="relative group w-48 h-48 rounded-full overflow-hidden mb-4 border-4 border-white shadow-md">
                 <img
                   src={member.image}
                   alt={member.name}
-                  className="w-full h-64 object-cover"
+                  className="w-full h-full object-cover"
                   data-tooltip-id={`member-${member.id}`}
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
-                  <p className="text-white text-center">{member.bio}</p>
+                <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 rounded-full">
+                  <p className="text-white text-center text-sm">{member.bio}</p>
                 </div>
               </div>
-              <div className="p-4">
+              <div className="text-center">
                 <h3 className="text-xl font-bold">{member.name}</h3>
                 <p className="text-blue-600 mb-3">{member.role}</p>
-                <div className="flex space-x-3">
+                <div className="flex space-x-3 justify-center">
                   {member.links.map((link, index) => (
                     <a
                       key={index}
@@ -138,86 +162,30 @@ const Biz = () => {
         </div>
       </section>
 
-      {/* Organizasyon Şeması */}
-      <section className="mb-20">
-        <h2 className="text-3xl font-semibold mb-10 text-center">
-          Takım Yapısı
-        </h2>
-        <div className="flex justify-center bg-white p-6 rounded-lg shadow-lg">
-          <Tree
-            lineWidth={"2px"}
-            lineColor={"#3b82f6"}
-            lineBorderRadius={"10px"}
-            label={
-              <div className="bg-blue-100 p-3 rounded-lg border border-blue-300">
-                <div className="font-bold text-lg text-blue-800">
-                  Ahmet Yılmaz
-                </div>
-                <div className="text-sm text-blue-600">Takım Lideri</div>
-              </div>
-            }>
-            <Tree
-              label={
-                <div className="bg-blue-50 p-2 rounded border border-blue-200">
-                  <div className="font-medium text-blue-700">Mehmet Kaya</div>
-                  <div className="text-xs text-blue-500">Yapay Zeka Uzmanı</div>
-                </div>
-              }
-            />
-            <Tree
-              label={
-                <div className="bg-blue-50 p-2 rounded border border-blue-200">
-                  <div className="font-medium text-blue-700">Ayşe Demir</div>
-                  <div className="text-xs text-blue-500">
-                    Frontend Geliştirici
-                  </div>
-                </div>
-              }
-            />
-            <Tree
-              label={
-                <div className="bg-blue-50 p-2 rounded border border-blue-200">
-                  <div className="font-medium text-blue-700">Fatma Şahin</div>
-                  <div className="text-xs text-blue-500">
-                    Backend Geliştirici
-                  </div>
-                </div>
-              }
-            />
-            <Tree
-              label={
-                <div className="bg-blue-50 p-2 rounded border border-blue-200">
-                  <div className="font-medium text-blue-700">Can Aydın</div>
-                  <div className="text-xs text-blue-500">Test Mühendisi</div>
-                </div>
-              }
-            />
-            <Tree
-              label={
-                <div className="bg-blue-50 p-2 rounded border border-blue-200">
-                  <div className="font-medium text-blue-700">Zeynep Koç</div>
-                  <div className="text-xs text-blue-500">UI/UX Tasarımcı</div>
-                </div>
-              }
-            />
-          </Tree>
-        </div>
-      </section>
-
       {/* Misyon & Vizyon */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
-          className="bg-white p-6 rounded-lg shadow-lg">
+          className="relative group w-64 h-64 rounded-full overflow-hidden mx-auto">
           <h3 className="text-2xl font-semibold mb-4 text-blue-700">
             Misyonumuz
           </h3>
           <p className="text-gray-700">
-            Evrensel bilgiye erişimi kolaylaştırmak için, yapay zekayı herkesin
-            faydalanabileceği bir araç haline getirmeyi ve farklı dillerdeki
-            video içerikleri erişilebilir kılmayı misyon edindik.
+            Misyonumuz, insanların birbirlerini daha iyi anlayabildiği bir dünya
+            için, teknolojiyi bir köprü olarak kullanmak. Yapay zeka destekli
+            sistemimiz sayesinde kullanıcıların farklı dillerdeki videoları
+            hızlı, doğru ve doğal bir şekilde kendi dillerinde
+            dinleyebilmelerini sağlıyoruz. Bu doğrultuda: Kullanıcı dostu bir
+            arayüz ile herkesin kolayca video yükleyebileceği, dil seçebileceği
+            ve çıktı alabileceği bir sistem sunmak, Eğitimden eğlenceye,
+            kurumsal iletişimden sosyal farkındalığa kadar geniş bir alanda
+            erişilebilir içerik üretimini desteklemek, Geliştirilebilir ve açık
+            katkıya uygun altyapılar oluşturarak teknolojiye ilgi duyan herkese
+            bu sistemin bir parçası olma imkânı tanımak temel misyonlarımız
+            arasındadır. Yalnızca yazılım geliştirmiyoruz — dillerin ötesinde
+            bir anlayış ortamı inşa ediyoruz.
           </p>
         </motion.div>
 
@@ -225,14 +193,24 @@ const Biz = () => {
           initial={{ opacity: 0, x: 20 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
-          className="bg-white p-6 rounded-lg shadow-lg">
+          className="relative group w-64 h-64 rounded-full overflow-hidden mx-auto">
           <h3 className="text-2xl font-semibold mb-4 text-blue-700">
             Vizyonumuz
           </h3>
           <p className="text-gray-700">
-            Yapay zeka teknolojilerini kullanıcı dostu sistemlere entegre
-            ederek, bilgiye erişimi kolaylaştıran, hızlı, doğru ve
-            kişiselleştirilmiş çözümler sunan öncü uygulamalar geliştirmek.
+            Dünyanın dört bir yanındaki içeriklerin dil engeline takılmadan
+            herkes tarafından erişilebilir olduğu bir dijital gelecek hayal
+            ediyoruz. Vizyonumuz, yapay zeka teknolojilerini kullanarak video
+            içeriklerin evrensel bir dilde konuşmasını sağlamak, insanların
+            bilgiye, eğitime ve kültüre erişimini demokratikleştirmektir. AI
+            Dublaj Sistemi ile sadece çeviri değil, duyguyu, anlamı ve
+            etkileşimi koruyan doğal bir dublaj deneyimi sunmak istiyoruz.
+            Böylece ister bir eğitim videosu, ister bir belgesel, ister bir
+            röportaj olsun — herkes kendi anadilinde, gerçek ses doğallığında bu
+            içeriklere ulaşabilsin. Gelecekte eğitim, medya, sağlık, hukuk ve
+            erişilebilirlik gibi farklı sektörlerde otomatik ve kaliteli çok
+            dilli içerik üretimi sağlayan bir dünya standardı olmak en büyük
+            hedefimizdir.
           </p>
         </motion.div>
       </section>
