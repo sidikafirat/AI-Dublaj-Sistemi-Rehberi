@@ -45,7 +45,7 @@ Günümüzde video içerikleri, küresel izleyici kitlesine ulaşmak için kriti
 
 ## 👥 Kimler İçin Uygun?  
 
-### 🎬 İçerik Üreticileri  
+### 🎬 İçerik Üreticileri : 
 🎥 YouTube, TikTok veya Instagram'da Türkçe izleyici kitlesine ulaşmak isteyenler.  
 🎥 Çok dilli kanal yöneten yaratıcılar.  
 
