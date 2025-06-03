@@ -10,7 +10,7 @@ const Input = ({
   error,
   ...props
 }) => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword] = useState(false);
 
   const Icon = () => {
     switch (icon) {
@@ -26,8 +26,8 @@ const Input = ({
   };
 
   return (
-    <div className="mb-5">
-      <div className="relative">
+    <div className="mb-5 ">
+      <div className="relative ">
         {icon && (
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <Icon />
@@ -40,23 +40,11 @@ const Input = ({
           onChange={onChange}
           className={`w-full py-3 px-4 ${
             icon ? "pl-10" : "pl-4"
-          } pr-10 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 ${
+          } pr-10 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-black placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 ${
             error ? "border-red-500" : "border-white/20"
           }`}
           {...props}
         />
-        {type === "password" && (
-          <button
-            type="button"
-            className="btn"
-            onClick={() => setShowPassword(!showPassword)}>
-            {showPassword ? (
-              <FiEyeOff className="text-gray-300 hover:text-white transition-colors" />
-            ) : (
-              <FiEye className="text-gray-300 hover:text-white transition-colors" />
-            )}
-          </button>
-        )}
       </div>
       {error && (
         <p className="mt-2 text-sm text-red-400 flex items-center">

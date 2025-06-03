@@ -1,8 +1,9 @@
 import { useState } from "react";
 import Input from "./AuthInput";
 import { FiArrowRight, FiGithub, FiTwitter, FiLinkedin } from "react-icons/fi";
+import { FaRobot } from "react-icons/fa"; // FaRobot simgesini içe aktar
 
-const AuthForm = (onClose) => {
+const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
@@ -59,43 +60,31 @@ const AuthForm = (onClose) => {
 
   return (
     <div className="bg-white/5 backdrop-blur-lg p-8 rounded-2xl shadow-2xl w-full max-w-md border border-white/10">
-      <button
-        onClick={onClose}
-        className="absolute top-4 right-4 text-gray-300 hover:text-blue-400 transition-colors">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor">
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
-      </button>
-
-      {/* Logo/Brand */}
-      <div className="flex justify-center mb-6">
-        <div className="text-white font-bold text-2xl flex items-center">
-          <span className="bg-gradient-to-r from-blue-400 to-blue-600 text-transparent bg-clip-text">
-            AI Dublaj
-          </span>
-        </div>
-      </div>
+      <h1
+        className="display-4 fw-bold mb-4 text-blue-900"
+        style={{ color: "#182235" }}>
+        <FaRobot className="me-3 " />
+        Dub.ai Pro
+      </h1>
 
       {/* Toggle Tabs */}
       <div className="flex justify-center mb-8">
-        <div className="flex bg-white/10 rounded-lg p-1">
+        <div className="flex bg-white/5 rounded-full p-0.5 shadow-sm">
           <button
-            className={`btn btn-secondary `}
+            className={`btn btn-secondary px-4 py-1.5 rounded-full text-sm font-medium transition-colors duration-200 ${
+              isLogin
+                ? "bg-blue-700 text-black shadow-sm"
+                : "bg-transparent text-gray-300 hover:bg-white/20"
+            }`}
             onClick={() => setIsLogin(true)}>
             Giriş Yap
           </button>
           <button
-            className={`btn btn-secondary`}
+            className={`btn btn-secondary px-4 py-1.5 rounded-full text-sm font-medium transition-colors duration-200 ${
+              !isLogin
+                ? "bg-blue-700 text-black shadow-sm"
+                : "bg-transparent text-gray-300 hover:bg-white/20"
+            }`}
             onClick={() => setIsLogin(false)}>
             Kayıt Ol
           </button>
@@ -176,7 +165,15 @@ const AuthForm = (onClose) => {
             </div>
             <a
               href="#"
-              className="text-sm text-blue-400 hover:text-blue-300 hover:underline">
+              style={{
+                background: "none",
+                border: "none",
+                padding: 0,
+                color: "#1a73e8", // Sayfadaki mavi tonlara uyumlu renk
+                textDecoration: "underline",
+                cursor: "pointer",
+                fontSize: "14px",
+              }}>
               Şifremi Unuttum?
             </a>
           </div>
@@ -202,21 +199,27 @@ const AuthForm = (onClose) => {
         </div>
 
         <div className="mt-6 grid grid-cols-3 gap-3">
-          <button
-            type="button"
-            className="w-full inline-flex justify-center py-2 px-4 border border-gray-700 rounded-md shadow-sm text-sm font-medium text-white bg-white/5 hover:bg-white/10 transition-colors">
+          <a
+            href="https://github.com/sidikafirat/AI-Dublaj-Sistemi-Rehberi"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full inline-flex justify-center py-3 px-4 rounded-md text-sm font-medium text-blue-400 bg-blue-400/10 hover:bg-blue-400/20 transition-colors">
             <FiGithub className="h-5 w-5" />
-          </button>
-          <button
-            type="button"
-            className="w-full inline-flex justify-center py-2 px-4 border border-gray-700 rounded-md shadow-sm text-sm font-medium text-white bg-white/5 hover:bg-white/10 transition-colors">
+          </a>
+          <a
+            href="https://twitter.com/kullaniciadi"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full inline-flex justify-center py-3 px-4 rounded-md text-sm font-medium text-blue-400 bg-blue-400/10 hover:bg-blue-400/20 transition-colors">
             <FiTwitter className="h-5 w-5" />
-          </button>
-          <button
-            type="button"
-            className="w-full inline-flex justify-center py-2 px-4 border border-gray-700 rounded-md shadow-sm text-sm font-medium text-white bg-white/5 hover:bg-white/10 transition-colors">
+          </a>
+          <a
+            href="https://www.linkedin.com/in/s%C4%B1d%C4%B1ka-firat-05ba42254/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full inline-flex justify-center py-3 px-4 rounded-md text-sm font-medium text-blue-400 bg-blue-400/10 hover:bg-blue-400/20 transition-colors">
             <FiLinkedin className="h-5 w-5" />
-          </button>
+          </a>
         </div>
       </div>
 
@@ -225,7 +228,15 @@ const AuthForm = (onClose) => {
           {isLogin ? "Hesabınız yok mu?" : "Zaten hesabınız var mı?"}{" "}
           <button
             onClick={() => setIsLogin(!isLogin)}
-            className="text-blue-400 hover:text-blue-300 font-medium hover:underline">
+            style={{
+              background: "none",
+              border: "none",
+              padding: 0,
+              color: "#1a73e8", // Sayfadaki mavi tonlara uyumlu renk
+              textDecoration: "underline",
+              cursor: "pointer",
+              fontSize: "14px",
+            }}>
             {isLogin ? "Kayıt Ol" : "Giriş Yap"}
           </button>
         </p>
