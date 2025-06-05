@@ -59,7 +59,7 @@ const AuthForm = () => {
   };
 
   return (
-    <div className="bg-white/5 backdrop-blur-lg p-8 rounded-2xl shadow-2xl w-full max-w-md border border-white/10">
+    <div className="bg-white/5 backdrop-blur-lg p-8 rounded-2xl shadow-2xl w-full max-w-md ">
       <h1
         className="display-4 fw-bold mb-4 text-blue-900"
         style={{ color: "#182235" }}>
@@ -69,9 +69,9 @@ const AuthForm = () => {
 
       {/* Toggle Tabs */}
       <div className="flex justify-center mb-8">
-        <div className="flex bg-white/5 rounded-full p-0.5 shadow-sm">
+        <div className="flex bg-white/5 rounded-full p-0.5 shadow-sm ">
           <button
-            className={`btn btn-secondary px-4 py-1.5 rounded-full text-sm font-medium transition-colors duration-200 ${
+            className={`btn btn-secondary px-4 py-1 rounded-full text-sm font-medium transition-colors duration-200 ${
               isLogin
                 ? "bg-blue-700 text-black shadow-sm"
                 : "bg-transparent text-gray-300 hover:bg-white/20"
@@ -80,7 +80,7 @@ const AuthForm = () => {
             Giriş Yap
           </button>
           <button
-            className={`btn btn-secondary px-4 py-1.5 rounded-full text-sm font-medium transition-colors duration-200 ${
+            className={`btn btn-secondary px-4 py-1 rounded-full text-sm font-medium transition-colors duration-200 ${
               !isLogin
                 ? "bg-blue-700 text-black shadow-sm"
                 : "bg-transparent text-gray-300 hover:bg-white/20"
@@ -92,98 +92,104 @@ const AuthForm = () => {
       </div>
 
       {/* Form Title */}
-      <h2 className="text-2xl font-bold text-center text-white mb-2">
-        {isLogin ? "Hesabınıza Giriş Yapın" : "Yeni Hesap Oluşturun"}
-      </h2>
-      <p className="text-gray-300 text-center mb-8">
-        {isLogin
-          ? "Devam etmek için giriş yapın"
-          : "Başlamak için hesabınızı oluşturun"}
-      </p>
+      <div className=" flex items-center justify-center min-h-screen bg-gray-900 p-4">
+        <div className=" py-5 w-full max-w-md bg-indigo-900 rounded-lg shadow-lg p-8 ">
+          <div className="flex flex-col items-center justify-center">
+            <h2 className="text-2xl font-bold text-center mb-2">
+              {isLogin ? "Hesabınıza Giriş Yapın" : "Yeni Hesap Oluşturun"}
+            </h2>
+            <p className="text-gray-300 text-center text-gray mb-8">
+              {isLogin
+                ? "Devam etmek için giriş yapın"
+                : "Başlamak için hesabınızı oluşturun"}
+            </p>
 
-      <form onSubmit={handleSubmit}>
-        {!isLogin && (
-          <Input
-            name="name"
-            type="text"
-            placeholder="Ad Soyad"
-            value={formData.name}
-            onChange={handleChange}
-            error={errors.name}
-            icon="user"
-          />
-        )}
+            <form onSubmit={handleSubmit} className="space-y-4 w-full">
+              {!isLogin && (
+                <Input
+                  name="name"
+                  type="text"
+                  placeholder="Ad Soyad"
+                  value={formData.name}
+                  onChange={handleChange}
+                  error={errors.name}
+                  icon="user"
+                />
+              )}
 
-        <Input
-          name="email"
-          type="email"
-          placeholder="E-posta Adresi"
-          value={formData.email}
-          onChange={handleChange}
-          error={errors.email}
-          icon="email"
-        />
-
-        <Input
-          name="password"
-          type="password"
-          placeholder="Şifre"
-          value={formData.password}
-          onChange={handleChange}
-          error={errors.password}
-          icon="password"
-        />
-
-        {!isLogin && (
-          <Input
-            name="confirmPassword"
-            type="password"
-            placeholder="Şifre Tekrar"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            error={errors.confirmPassword}
-            icon="password"
-          />
-        )}
-
-        {isLogin && (
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center">
-              <input
-                id="rememberMe"
-                name="rememberMe"
-                type="checkbox"
-                checked={formData.rememberMe}
+              <Input
+                name="email"
+                type="email"
+                placeholder="E-posta Adresi"
+                value={formData.email}
                 onChange={handleChange}
-                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                error={errors.email}
+                icon="email"
               />
-              <label
-                htmlFor="rememberMe"
-                className="ml-2 block text-sm text-gray-300">
-                Beni Hatırla
-              </label>
-            </div>
-            <a
-              href="#"
-              style={{
-                background: "none",
-                border: "none",
-                padding: 0,
-                color: "#1a73e8", // Sayfadaki mavi tonlara uyumlu renk
-                textDecoration: "underline",
-                cursor: "pointer",
-                fontSize: "14px",
-              }}>
-              Şifremi Unuttum?
-            </a>
-          </div>
-        )}
 
-        <button type="submit" className="btn btn-secondary">
-          {isLogin ? "Giriş Yap" : "Kayıt Ol"}
-          <FiArrowRight className="ml-2 animate-pulse" />
-        </button>
-      </form>
+              <Input
+                name="password"
+                type="password"
+                placeholder="Şifre"
+                value={formData.password}
+                onChange={handleChange}
+                error={errors.password}
+                icon="password"
+              />
+
+              {!isLogin && (
+                <Input
+                  name="confirmPassword"
+                  type="password"
+                  placeholder="Şifre Tekrar"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  error={errors.confirmPassword}
+                  icon="password"
+                />
+              )}
+
+              {isLogin && (
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center">
+                    <input
+                      id="rememberMe"
+                      name="rememberMe"
+                      type="checkbox"
+                      checked={formData.rememberMe}
+                      onChange={handleChange}
+                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    />
+                    <label
+                      htmlFor="rememberMe"
+                      className="ml-2 block text-sm text-gray-300">
+                      Beni Hatırla
+                    </label>
+                  </div>
+                  <a
+                    href="#"
+                    style={{
+                      background: "none",
+                      border: "none",
+                      padding: 0,
+                      color: "#1a73e8",
+                      textDecoration: "underline",
+                      cursor: "pointer",
+                      fontSize: "14px",
+                    }}>
+                    Şifremi Unuttum?
+                  </a>
+                </div>
+              )}
+
+              <button type="submit" className="btn btn-secondary w-full">
+                {isLogin ? "Giriş Yap" : "Kayıt Ol"}
+                <FiArrowRight className="ml-2 animate-pulse" />
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
 
       {/* Social Login */}
       <div className="mt-8">
