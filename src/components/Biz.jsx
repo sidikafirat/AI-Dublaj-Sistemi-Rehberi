@@ -58,7 +58,7 @@ const teamMembers = [
     name: "Umut Beler",
     role: "Veritabanı Tasarımı ve Yönetimi",
     image:
-      "https://media.licdn.com/dms/image/v2/D4D03AQFDgJfRCjy7oQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1729453171294?e=1754524800&v=beta&t=dJb6zAazHXewpCDjBSoPpiqP9oEMRop1lEHBHj4I_Qc",
+      "https://media.licdn.com/dms/image/v2/D4D03AQE0zN3ld08MKA/profile-displayphoto-shrink_400_400/B4DZctrDgbGUAg-/0/1748817953123?e=1755129600&v=beta&t=P5csmVGcTLJpw0VFrHoek8voufseFFs79uKQSX9dWh4",
     bio: "MySQL, ER Modelleme, İlişkisel Veri Yapısı, Normalizasyon",
     links: [
       {
@@ -88,7 +88,7 @@ const teamMembers = [
     name: "Burak Erim",
     role: "Frontend Geliştirici",
     image:
-      "https://media.licdn.com/dms/image/v2/D4D03AQHQthVedVGIsg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1731948085733?e=1754524800&v=beta&t=S0YElHvNFgMVAgJMfhTom786ipaADR8klinTmZrjapU",
+      "https://media.licdn.com/dms/image/v2/D5603AQEwLWGzqDIz_g/profile-displayphoto-shrink_400_400/B56ZdkezlOGsAg-/0/1749737488264?e=1755129600&v=beta&t=mzPlWcqOlZoheeXlHVKrybHM1bnYc4vOPUy_HpaCj7g",
     bio: "React, React-Bootstrap, Kullanıcı Deneyimi Tasarımı",
     links: [
       {

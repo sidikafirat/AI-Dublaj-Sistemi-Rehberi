@@ -26,24 +26,24 @@ const AuthForm = () => {
     const newErrors = {};
 
     if (!formData.email) {
-      newErrors.email = "Email is required";
+      newErrors.email = "Email gereklidir.";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Email is invalid";
+      newErrors.email = "Email geçersiz.";
     }
 
     if (!formData.password) {
-      newErrors.password = "Password is required";
+      newErrors.password = "şifre gereklidir.";
     } else if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
+      newErrors.password = "Şifre en az 6 karakter olmalıdır.";
     }
 
     if (!isLogin) {
       if (!formData.name) {
-        newErrors.name = "Name is required";
+        newErrors.name = "İsim gereklidir.";
       }
 
       if (formData.password !== formData.confirmPassword) {
-        newErrors.confirmPassword = "Passwords do not match";
+        newErrors.confirmPassword = "Parolalar eşleşmiyor.";
       }
     }
 
