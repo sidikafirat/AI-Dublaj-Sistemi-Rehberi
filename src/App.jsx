@@ -9,6 +9,7 @@ import Biz from "./components/Biz"; // Biz bileşeni eklendi
 import { Routes, Route } from "react-router-dom"; // React Router kaldırıldı (isteğe bağlı)
 import AuthWrapper from "./components/Auth/AuthWrapper";
 import AuthForm from "./components/Auth/AuthForm";
+import ProfilePage from "./components/ProfilePage";
 
 function App() {
   const [showVideoUploader, setShowVideoUploader] = useState(false);
@@ -17,22 +18,42 @@ function App() {
 
   return (
     <>
-      <NavBar
-        onDemoClick={() => {
-          setShowVideoUploader(true);
-          setCurrentPage("home"); // Demo'ya basınca ana sayfaya dön
-        }}
-        onNavigate={(page) => {
-          setCurrentPage(page);
-        }}
-        onAuthClick={() => {
-          setShowAuth(true);
-          setCurrentPage("auth"); // Auth formunu aç
-        }}
-      />
+      {/* VideoUploader açık değilse NavBar'ı göster */}
+      {!showVideoUploader && currentPage !== "profile" && (
+        <NavBar
+          onDemoClick={() => {
+            setShowVideoUploader(true);
+            setCurrentPage("home"); // Demo'ya basınca ana sayfaya dön
+          }}
+          onNavigate={(page) => {
+            setCurrentPage(page);
+          }}
+          onAuthClick={() => {
+            setShowAuth(true);
+            setCurrentPage("auth"); // Auth formunu aç
+          }}
+        />
+      )}
       {/* Koşullu renderlama */}
       {currentPage === "home" && (
-        <>{showVideoUploader ? <VideoUploader /> : <HomePage />}</>
+        <>
+          {showVideoUploader ? (
+            <VideoUploader
+              setCurrentPage={setCurrentPage}
+              setShowVideoUploader={setShowVideoUploader}
+            />
+          ) : (
+            <HomePage />
+          )}
+        </>
+      )}
+      {currentPage === "profile" && (
+        <ProfilePage
+          onBack={() => {
+            setCurrentPage("home");
+            setShowVideoUploader(true); // Tekrar VideoUploader ekranını aktif et
+          }}
+        />
       )}
       {currentPage === "biz" && <Biz />} {/* Biz Kimiz? sayfası */}
       {currentPage === "auth" && <>{showAuth ? <AuthForm /> : <HomePage />}</>}
