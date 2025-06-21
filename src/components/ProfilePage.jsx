@@ -1,61 +1,96 @@
 import { useState, useEffect } from "react";
 import { Button, Form, ListGroup, Card, Container } from "react-bootstrap";
 
-const ProfilePage = ({ onBack }) => {
-  // Kullanıcı bilgileri state'i
-  const [userInfo, setUserInfo] = useState({
-    name: "Ahmet",
-    surname: "Yılmaz",
-    email: "ahmet@example.com",
-  });
-
-  // Düzenleme modu state'i
+const ProfilePage = ({ onBack, previousPage }) => {
+  const [userInfo, setUserInfo] = useState(null); // Yüklenme durumu için null
   const [isEditing, setIsEditing] = useState(false);
-
-  // Geçmiş URL'ler state'i
   const [history, setHistory] = useState([]);
 
-  // Component yüklendiğinde localStorage'dan geçmişi al
   useEffect(() => {
+    // Geçmiş URL'leri al
     const savedHistory = JSON.parse(localStorage.getItem("urlHistory")) || [];
     setHistory(savedHistory);
 
-    const savedUserInfo =
-      JSON.parse(localStorage.getItem("userInfo")) || userInfo;
-    setUserInfo(savedUserInfo);
+    // Kullanıcı bilgilerini API'den çek
+    const userId = localStorage.getItem("user_id");
+    if (userId) {
+      fetch(`http://localhost:5000/user/${userId}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.status === "success") {
+            setUserInfo({
+              name: data.user.name,
+              email: data.user.email,
+            });
+          }
+        })
+        .catch((err) => console.error("Kullanıcı bilgileri alınamadı:", err));
+    }
   }, []);
 
-  // Input değişikliklerini handle et
+  // Yükleniyorsa göstermek için
+  if (!userInfo) {
+    return <p>Yükleniyor...</p>;
+  }
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUserInfo((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Bilgileri kaydet
   const handleSave = () => {
-    localStorage.setItem("userInfo", JSON.stringify(userInfo));
-    setIsEditing(false);
+    const userId = localStorage.getItem("user_id");
+    if (userId) {
+      fetch(`http://localhost:5000/user/${userId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userInfo),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.status === "success") {
+            alert("Bilgiler güncellendi.");
+            setIsEditing(false);
+          } else {
+            alert("Güncelleme başarısız: " + data.message);
+          }
+        })
+        .catch((err) => console.error("Güncelleme hatası:", err));
+    }
   };
 
-  // URL geçmişinden öğe sil
   const deleteHistoryItem = (index) => {
     const newHistory = history.filter((_, i) => i !== index);
     setHistory(newHistory);
     localStorage.setItem("urlHistory", JSON.stringify(newHistory));
   };
 
+  const handleGoBack = () => {
+    if (previousPage) onBack(previousPage);
+    else onBack("home");
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("user_id");
+    // Gerekirse diğer localStorage verilerini de temizleyebilirsin
+    window.location.href = "/auth";
+  };
+
   return (
     <Container className="youtube-transcript-container relative">
-      <Button variant="secondary" onClick={onBack} className="mb-3">
+      <Button variant="secondary" onClick={handleGoBack} className="mb-3">
         Geri Dön
       </Button>
+
       <Card>
         <Card.Header as="h4">Profil Bilgileri</Card.Header>
         <Card.Body>
           {isEditing ? (
             <Form>
-              <Form.Group className="mb-3">
-                <Form.Label>Ad</Form.Label>
+              <Form.Group className="mb-3" controlId="formName">
+                <Form.Label>Ad Soyad</Form.Label>
                 <Form.Control
                   type="text"
                   name="name"
@@ -64,17 +99,7 @@ const ProfilePage = ({ onBack }) => {
                 />
               </Form.Group>
 
-              <Form.Group className="mb-3">
-                <Form.Label>Soyad</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="surname"
-                  value={userInfo.surname}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-
-              <Form.Group className="mb-3">
+              <Form.Group className="mb-3" controlId="formEmail">
                 <Form.Label>E-posta</Form.Label>
                 <Form.Control
                   type="email"
@@ -84,29 +109,34 @@ const ProfilePage = ({ onBack }) => {
                 />
               </Form.Group>
 
-              <Button variant="success" onClick={handleSave} className="me-2">
-                Kaydet
-              </Button>
-              <Button variant="secondary" onClick={() => setIsEditing(false)}>
-                İptal
-              </Button>
+              <div className="d-flex gap-2 justify-content-center mt-3">
+                <Button variant="success" onClick={handleSave}>
+                  Kaydet
+                </Button>
+                <Button variant="secondary" onClick={() => setIsEditing(false)}>
+                  İptal
+                </Button>
+              </div>
             </Form>
           ) : (
             <>
               <div className="mb-4">
                 <p>
-                  <strong>Ad:</strong> {userInfo.name}
-                </p>
-                <p>
-                  <strong>Soyad:</strong> {userInfo.surname}
+                  <strong>Ad Soyad:</strong> {userInfo.name}
                 </p>
                 <p>
                   <strong>E-posta:</strong> {userInfo.email}
                 </p>
               </div>
-              <Button variant="primary" onClick={() => setIsEditing(true)}>
-                Düzenle
-              </Button>
+
+              <div className="d-flex gap-2 justify-content-center mt-3">
+                <Button variant="primary" onClick={() => setIsEditing(true)}>
+                  Düzenle
+                </Button>
+                <Button variant="danger" onClick={handleLogout}>
+                  Çıkış Yap
+                </Button>
+              </div>
             </>
           )}
         </Card.Body>
@@ -122,14 +152,16 @@ const ProfilePage = ({ onBack }) => {
               {history.map((url, index) => (
                 <ListGroup.Item
                   key={index}
-                  className="d-flex justify-content-between align-items-center">
+                  className="d-flex justify-content-between align-items-center"
+                >
                   <div className="text-truncate" style={{ maxWidth: "80%" }}>
                     {url}
                   </div>
                   <Button
                     variant="outline-danger"
                     size="sm"
-                    onClick={() => deleteHistoryItem(index)}>
+                    onClick={() => deleteHistoryItem(index)}
+                  >
                     Sil
                   </Button>
                 </ListGroup.Item>

@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom"; // react-router-dom kullanıyorsan
 import Input from "./AuthInput";
 import { FiArrowRight, FiGithub, FiTwitter, FiLinkedin } from "react-icons/fi";
-import { FaRobot } from "react-icons/fa"; // FaRobot simgesini içe aktar
+import { FaRobot } from "react-icons/fa";
 import ForgotPassword from "./ForgotPassword";
 
 const AuthForm = () => {
+  const navigate = useNavigate(); // yönlendirme için
+  const alertShown = useRef(false);
+
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
@@ -15,6 +19,15 @@ const AuthForm = () => {
   });
   const [errors, setErrors] = useState({});
   const [showForgotPassword, setShowForgotPassword] = useState(false);
+
+  useEffect(() => {
+    const userId = localStorage.getItem("user_id");
+    if (userId && !alertShown.current) {
+      alertShown.current = true;
+      alert("Önce çıkış yapmalısınız!");
+      navigate("/profile");
+    }
+  }, [navigate]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -34,7 +47,7 @@ const AuthForm = () => {
     }
 
     if (!formData.password) {
-      newErrors.password = "şifre gereklidir.";
+      newErrors.password = "Şifre gereklidir.";
     } else if (formData.password.length < 6) {
       newErrors.password = "Şifre en az 6 karakter olmalıdır.";
     }
@@ -43,7 +56,6 @@ const AuthForm = () => {
       if (!formData.name) {
         newErrors.name = "İsim gereklidir.";
       }
-
       if (formData.password !== formData.confirmPassword) {
         newErrors.confirmPassword = "Parolalar eşleşmiyor.";
       }
@@ -55,8 +67,56 @@ const AuthForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      console.log("Form submitted:", formData);
+    if (!validateForm()) return;
+
+    if (isLogin) {
+      // GİRİŞ YAP
+      fetch("http://localhost:5000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.status === "success") {
+            localStorage.setItem("user_id", data.user_id);
+            alert("Giriş başarılı!");
+            navigate("/profile"); // Giriş sonrası yönlendirme
+          } else {
+            alert("Giriş başarısız: " + data.message);
+          }
+        })
+        .catch((err) => {
+          console.error("Giriş hatası:", err);
+          alert("Sunucu hatası oluştu.");
+        });
+    } else {
+      // KAYIT OL
+      fetch("http://localhost:5000/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.status === "user_created") {
+            alert("Kayıt başarılı! Giriş yapabilirsiniz.");
+            setIsLogin(true);
+          } else {
+            alert("Kayıt başarısız.");
+          }
+        })
+        .catch((err) => {
+          console.error("Kayıt hatası:", err);
+          alert("Sunucu hatası oluştu.");
+        });
     }
   };
 
@@ -68,7 +128,8 @@ const AuthForm = () => {
         <div className="bg-white/5 backdrop-blur-lg p-8 rounded-2xl shadow-2xl w-full max-w-md ">
           <h1
             className="display-4 fw-bold mb-4 text-blue-900"
-            style={{ color: "#182235" }}>
+            style={{ color: "#182235" }}
+          >
             <FaRobot className="me-3 " />
             Dub.ai Pro
           </h1>
@@ -82,7 +143,8 @@ const AuthForm = () => {
                     ? "bg-blue-700 text-black shadow-sm"
                     : "bg-transparent text-gray-300 hover:bg-white/20"
                 }`}
-                onClick={() => setIsLogin(true)}>
+                onClick={() => setIsLogin(true)}
+              >
                 Giriş Yap
               </button>
               <button
@@ -91,7 +153,8 @@ const AuthForm = () => {
                     ? "bg-blue-700 text-black shadow-sm"
                     : "bg-transparent text-gray-300 hover:bg-white/20"
                 }`}
-                onClick={() => setIsLogin(false)}>
+                onClick={() => setIsLogin(false)}
+              >
                 Kayıt Ol
               </button>
             </div>
@@ -168,7 +231,8 @@ const AuthForm = () => {
                         />
                         <label
                           htmlFor="rememberMe"
-                          className="ml-2 block text-sm text-gray-300">
+                          className="ml-2 block text-sm text-gray-300"
+                        >
                           Beni Hatırla
                         </label>
                       </div>
@@ -182,7 +246,8 @@ const AuthForm = () => {
                           textDecoration: "underline",
                           cursor: "pointer",
                           fontSize: "14px",
-                        }}>
+                        }}
+                      >
                         Şifremi Unuttum?
                       </a>
                     </div>
@@ -215,21 +280,24 @@ const AuthForm = () => {
                 href="https://github.com/sidikafirat/AI-Dublaj-Sistemi-Rehberi"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-flex justify-center py-3 px-4 rounded-md text-sm font-medium text-blue-400 bg-blue-400/10 hover:bg-blue-400/20 transition-colors">
+                className="w-full inline-flex justify-center py-3 px-4 rounded-md text-sm font-medium text-blue-400 bg-blue-400/10 hover:bg-blue-400/20 transition-colors"
+              >
                 <FiGithub className="h-5 w-5" />
               </a>
               <a
                 href="https://twitter.com/kullaniciadi"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-flex justify-center py-3 px-4 rounded-md text-sm font-medium text-blue-400 bg-blue-400/10 hover:bg-blue-400/20 transition-colors">
+                className="w-full inline-flex justify-center py-3 px-4 rounded-md text-sm font-medium text-blue-400 bg-blue-400/10 hover:bg-blue-400/20 transition-colors"
+              >
                 <FiTwitter className="h-5 w-5" />
               </a>
               <a
                 href="https://www.linkedin.com/in/s%C4%B1d%C4%B1ka-firat-05ba42254/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-flex justify-center py-3 px-4 rounded-md text-sm font-medium text-blue-400 bg-blue-400/10 hover:bg-blue-400/20 transition-colors">
+                className="w-full inline-flex justify-center py-3 px-4 rounded-md text-sm font-medium text-blue-400 bg-blue-400/10 hover:bg-blue-400/20 transition-colors"
+              >
                 <FiLinkedin className="h-5 w-5" />
               </a>
             </div>
@@ -244,11 +312,12 @@ const AuthForm = () => {
                   background: "none",
                   border: "none",
                   padding: 0,
-                  color: "#1a73e8", // Sayfadaki mavi tonlara uyumlu renk
+                  color: "#1a73e8",
                   textDecoration: "underline",
                   cursor: "pointer",
                   fontSize: "14px",
-                }}>
+                }}
+              >
                 {isLogin ? "Kayıt Ol" : "Giriş Yap"}
               </button>
             </p>
