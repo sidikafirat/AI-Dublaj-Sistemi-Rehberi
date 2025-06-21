@@ -5,7 +5,12 @@
   margin-top: 59px;
   text-align: center;
   margin-bottom: 0px;
- 
+
+}
+
+section, 
+#home, #features, #technology, #workflow, #about {
+  scroll-margin-top: 70px; /* Navbar yüksekliğini telafi eder */
 }
 
 .logo {
@@ -255,8 +260,10 @@
 
 .social-icons {
   display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
+  align-items: center;    
+  gap: 1rem;              
+  font-size: 1.5rem;     
+  margin-left: 20px;      
 }
 
 .social-icons a {
@@ -267,6 +274,17 @@
 
 .social-icons a:hover {
   color: #64ffda;
+}
+
+.social-icons .profile-icon {
+  color: #ccd6f6; /* Varsayılan renk */
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.3s; /* Renk geçiş efekti */
+}
+
+.social-icons .profile-icon:hover {
+  color: #64ffda; /* Hover'da aynı renk */
 }
 
 .footer-bottom {

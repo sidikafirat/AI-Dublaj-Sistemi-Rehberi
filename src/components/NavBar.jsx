@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
-import { FaRobot, FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaRobot, FaGithub, FaLinkedin, FaUser } from "react-icons/fa";
 
 export const NavBar = ({ onDemoClick, onNavigate, onAuthClick }) => {
   const [activeLink, setActiveLink] = useState("home");
@@ -18,24 +18,29 @@ export const NavBar = ({ onDemoClick, onNavigate, onAuthClick }) => {
   }, []);
 
   const scrollTo = (id) => {
-    if (id === "biz") {
-      onNavigate("biz");
-      setExpanded(false);
-      return;
-    }
-    if (id === "demo") {
-      onDemoClick(); // Demo butonuna basıldığında prop fonksiyonunu çağır
-      setExpanded(false); // Menüyü kapat
-      return;
-    }
+  if (["features", "technology", "workflow", "about", "home"].includes(id)) {
+    // Başka bir sayfadaysak önce anasayfaya yönlendir
+    if (window.location.pathname !== "/") {
+      onNavigate("home");
 
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setActiveLink(id);
-      setExpanded(false); // Menüyü kapat
+      // Anasayfa yüklenince scroll için küçük bir gecikme
+      setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) element.scrollIntoView({ behavior: "smooth" });
+      }, 300);
+    } else {
+      // Zaten anasayfadaysak direkt scroll
+      const element = document.getElementById(id);
+      if (element) element.scrollIntoView({ behavior: "smooth" });
     }
-  };
+    setExpanded(false);
+  } else {
+    // Diğer sayfalar (biz, auth, vs.)
+    onNavigate(id);
+    setExpanded(false);
+  }
+};
+
 
   return (
     <Navbar expand="lg" className={scrolled ? "scrolled" : ""} fixed="top">
@@ -72,19 +77,20 @@ export const NavBar = ({ onDemoClick, onNavigate, onAuthClick }) => {
               className={activeLink === "about" ? "active" : ""}>
               Hakkında
             </Nav.Link>
-            <Nav.Link onClick={() => onNavigate("biz")}>Biz Kimiz?</Nav.Link>{" "}
-            <Nav.Link onClick={() => onAuthClick("authform")}>
+            <Nav.Link onClick={() => onNavigate("biz")}>Biz Kimiz?</Nav.Link>
+            <Nav.Link onClick={() => scrollTo("auth")}>
               Giriş / Kayıt Ol
-            </Nav.Link>{" "}
-            {/* ← Yeni buton */}
+            </Nav.Link>
+
           </Nav>
 
           <button
             className="demo-btn"
             onClick={() => {
-              scrollTo("demo");
-              setExpanded(false); // Menüyü kapat
-            }}>
+              onNavigate("demo");
+              setExpanded(false);
+            }}
+          >
             DEMO TRY
           </button>
           <div className="social-icons">
@@ -99,6 +105,11 @@ export const NavBar = ({ onDemoClick, onNavigate, onAuthClick }) => {
               target="_blank"
               rel="noopener noreferrer">
               <FaLinkedin />
+            </a>
+            <a
+              onClick={() => onNavigate("profile")}
+              className="profile-icon"> {/* className eklendi */}
+              <FaUser />
             </a>
           </div>
         </Navbar.Collapse>
